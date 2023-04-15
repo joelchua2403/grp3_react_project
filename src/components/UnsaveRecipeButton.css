@@ -1,0 +1,13 @@
+.unsave-recipe-button {
+    display: inline-block;
+}
+
+.unsave-recipe-button:hover .unsave-icon {
+    transform: scale(1.2);
+}
+
+.unsave-icon {
+    border-color: black;
+    /* font-size: 24px; */
+    transition: transform 0.3s ease;
+}

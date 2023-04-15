@@ -6,14 +6,25 @@ import Homepage from './pages/Homepage';
 import SavedRecipes from './pages/SavedRecipes';
 import MyFeedPage from './pages/MyFeedPage';
 import axios from "axios";
+import SaveRecipeButton from './components/SaveRecipeButton';
+import UnsaveRecipeButton from './components/UnsaveRecipeButton';
+
 
 function App() {
   const [search, setSearch] = useState('');
   const [results, setResults] = useState([]);
   const [savedRecipes, setSavedRecipes] = useState([]);
   const [myFeedRecipes, setMyFeedRecipes] = useState([]);
- 
-   
+  const [isSaved, setIsSaved] = useState(false);
+  const [savedRecipeIDs, setSavedRecipeIDs] = useState([]);
+
+  const result = results.map((result) => result.id);
+
+ console.log(result);
+
+
+  
+
   const searchRecipes = () => {
     
       var myHeaders = new Headers();
@@ -50,10 +61,10 @@ function App() {
       <Routes>
         <Route path='/' element={ <Homepage 
       search={search} setSearch={setSearch} searchRecipes={searchRecipes}
-      results={results} setResults={setResults} savedRecipes={savedRecipes} setSavedRecipes={setSavedRecipes}
+      results={results} setResults={setResults} savedRecipes={savedRecipes} setSavedRecipes={setSavedRecipes} getRecipeByID={getRecipeByID} isSaved={isSaved} setIsSaved={setIsSaved} handleUnsaveRecipeButton={handleUnsaveRecipeButton} handleSaveRecipeButton={handleSaveRecipeButton}
       />} />
      <Route path='/savedrecipes' element={<SavedRecipes savedRecipes={savedRecipes} />} />
-     <Route path='/myfeed' element={<MyFeedPage myFeedRecipes={myFeedRecipes} setMyFeedRecipes={setMyFeedRecipes} getRecipeByID={getRecipeByID}/>} />
+     <Route path='/myfeed' element={<MyFeedPage myFeedRecipes={myFeedRecipes} setMyFeedRecipes={setMyFeedRecipes} getRecipeByID={getRecipeByID} savedRecipes={savedRecipes} setSavedRecipes={setSavedRecipes} results={results}/>} />
       </Routes>
     </Router>
   );

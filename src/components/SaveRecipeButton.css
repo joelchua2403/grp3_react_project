@@ -1,0 +1,13 @@
+.save-recipe-button {
+    display: inline-block;
+}
+
+.save-recipe-button:hover .save-icon{
+    transform: scale(1.2);
+}
+
+.save-icon {
+    color: red;
+    /* font-size: 24px; */
+    transition: transform 0.3s ease;
+}
