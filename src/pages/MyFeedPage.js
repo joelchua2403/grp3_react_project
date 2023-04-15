@@ -1,28 +1,26 @@
 import { useState, useEffect } from "react";
-import {
-  MDBCard,
-  MDBCardImage,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-  MDBRow,
-  MDBCol,
-} from "mdb-react-ui-kit";
+import { MDBRow } from "mdb-react-ui-kit";
 import Spinner from "react-bootstrap/Spinner";
-import { Link } from "react-router-dom";
 import NavbarHeader from "../components/Navbar";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "./MyFeedPage.css";
-import SaveRecipeButton from "../components/SaveRecipeButton";
-import UnsaveRecipeButton from "../components/UnsaveRecipeButton";
 import NewRecipeCard from "../components/NewRecipeCard";
 
-function MyFeedPage({ myFeedRecipes, setMyFeedRecipes, getRecipeByID, savedRecipes, setSavedRecipes }) {
+function MyFeedPage({
+  myFeedRecipes,
+  setMyFeedRecipes,
+  getRecipeByID,
+  savedRecipes,
+  setSavedRecipes,
+  handleUnsaveRecipeButton,
+  handleSaveRecipeButton,
+  savedRecipeIDs,
+  setSavedRecipeIDs,
+}) {
   const [isLoading, setIsLoading] = useState(false);
-  
 
-    useEffect(() => {
+  useEffect(() => {
     const generateRandomRecipeIDs = () => {
       const randomIDs = [];
       for (let i = 0; i < 10; i++) {
@@ -32,8 +30,8 @@ function MyFeedPage({ myFeedRecipes, setMyFeedRecipes, getRecipeByID, savedRecip
     };
 
     const fetchRecipes = async () => {
-        setIsLoading(true);
-        const recipeIDs = generateRandomRecipeIDs();
+      setIsLoading(true);
+      const recipeIDs = generateRandomRecipeIDs();
       const fetchedRecipes = [];
 
       for (const recipeID of recipeIDs) {
@@ -60,52 +58,28 @@ function MyFeedPage({ myFeedRecipes, setMyFeedRecipes, getRecipeByID, savedRecip
       <h1 style={{ padding: "50px", textAlign: "center" }}>My Feed</h1>
       {isLoading ? (
         <div className="spinner-container">
-            <Spinner animation="border" variant="secondary" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </Spinner>
-            </div>
+          <Spinner animation="border" variant="secondary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
       ) : (
         <MDBRow className="row-cols-1 row-cols-md-5 g-4">
-        {myFeedRecipes &&
-          myFeedRecipes.map((myFeedRecipe) => (
-            <NewRecipeCard
-        key={myFeedRecipe.id}
-        recipe={myFeedRecipe}
-        setSavedRecipes={setSavedRecipes}
-        savedRecipes={savedRecipes}
-      />
-            // <MDBCol key={myFeedRecipe.id}>
-            //   <MDBCard>
-            //     <MDBCardImage
-            //       src={myFeedRecipe.image}
-            //       alt={myFeedRecipe.title}
-            //       position="top"
-            //     />
-            //     <MDBCardBody>
-            //       <MDBCardTitle
-            //         style={{
-            //           height: "50px",
-            //           overflow: "hidden",
-            //           textOverflow: "ellipsis",
-            //           whiteSpace: "nowrap",
-            //         }}
-            //       >
-            //         {myFeedRecipe.title}
-            //       </MDBCardTitle>
-            //       <MDBCardText>
-            //         <Link to={`/recipe/${myFeedRecipe.id}`}>Details</Link>
-            //       </MDBCardText>
-            //       <MDBCardText>
-            //       {isSaved ? <SaveRecipeButton onClick={handleSaveRecipeButton}/> : <UnsaveRecipeButton onClick={handleUnsaveRecipeButton}/>}
-            //       </MDBCardText>
-            //     </MDBCardBody>
-            //   </MDBCard>
-            // </MDBCol>
-          ))}
-      </MDBRow>
+          {myFeedRecipes &&
+            myFeedRecipes.map((myFeedRecipe) => (
+              <NewRecipeCard
+                key={myFeedRecipe.id}
+                recipe={myFeedRecipe}
+                setSavedRecipes={setSavedRecipes}
+                savedRecipes={savedRecipes}
+                handleUnsaveRecipeButton={handleUnsaveRecipeButton}
+                handleSaveRecipeButton={handleSaveRecipeButton}
+                savedRecipeIDs={savedRecipeIDs}
+                setSavedRecipeIDs={setSavedRecipeIDs}
+              />
+            ))}
+        </MDBRow>
       )}
-      
-      
+
       <Footer />
     </div>
   );
